@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,34 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only('email', 'password');
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+
+        $user = \App\Models\User::where('email', $credentials['email'])->first();
+
+        if ($user && in_array($user->status, [1, 3])) {
+            return $this->guard()->attempt($credentials, $request->filled('remember'));
+        }
+
+        return false;
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $user = \App\Models\User::where('email', $request->email)->first();
+
+        if ($user && !in_array($user->status, [1, 3])) {
+            throw ValidationException::withMessages([
+                $this->username() => ['Your account is not approved for login.'],
+            ]);
+        }
     }
 }

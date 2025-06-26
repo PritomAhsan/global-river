@@ -1,6 +1,12 @@
 @extends('layouts.master')
 
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-header">
             <div class="float-start">
@@ -28,9 +34,9 @@
                         <th>
                             Email
                         </th>
-                        <th>
+                        {{-- <th>
                             Roles
-                        </th>
+                        </th> --}}
                         <th>
                             Status
                         </th>
@@ -54,28 +60,26 @@
                             <td>
                                 {{ $user->email ?? '' }}
                             </td>
-                            <td>
+                            {{-- <td>
                                 @foreach($user->getRoleNames() as $key => $item)
                                     <span class="badge bg-info">{{ $item }}</span>
                                 @endforeach
-                            </td>
+                            </td> --}}
                             <td>
-                                @if($user->status)
-                                    <span class="badge bg-success">Active</span>
-                                @else
-                                    <span class="badge bg-danger">Blocked</span>
+                                @if($user->status == 1)
+                                    <span class="badge bg-success">Admin</span>
+                                @elseif($user->status == 2)
+                                    <span class="badge bg-warning">Pending</span>
+                                @elseif($user->status == 3)
+                                    <span class="badge bg-danger">Approved</span>
                                 @endif
                             </td>
                             <td>
                                 {{ $user->created_at->format('Y-m-d') ?? '' }}
                             </td>
                             <td>
-                                @if (auth()->user()->hasRole('Admin'))
-                                @if($user->status)
-                                    <a href="{{ route('admin.user.banUnban', ['id' => $user->id, 'status' => 0]) }}" class="badge bg-danger">Block</a>
-                                @else
-                                    <a href="{{ route('admin.user.banUnban', ['id' => $user->id, 'status' => 1]) }}" class="badge bg-info">Unblock</a>
-                                @endif
+                                @if($user->status == 2)
+                                    <a href="{{ route('admin.user.approve', ['id' => $user->id, 'status' => 3]) }}" class="btn btn-sm btn-primary">Approve</a>
                                 @endif
                             </td>
                         </tr>

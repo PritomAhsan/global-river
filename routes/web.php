@@ -20,4 +20,5 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/submission-form', [App\Http\Controllers\HomeController::class, 'form'])->name('submission-form');
+Route::post('/submission-form', [App\Http\Controllers\HomeController::class, 'formAction'])->name('submission-form-action');

@@ -18,13 +18,21 @@
                     </a>
                 </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('admin/users*')) ? 'active' : '' }}"
-                           href="{{ route('admin.users.index') }}">
-                            <span data-feather="users" class="align-text-bottom"></span>
-                            Users
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ (request()->is('admin/users*')) ? 'active' : '' }}"
+                        href="{{ route('admin.users.index') }}">
+                        <span data-feather="users" class="align-text-bottom"></span>
+                        Users
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ (request()->is('admin/submissions*')) ? 'active' : '' }}"
+                        href="{{ route('admin.submissions.index') }}">
+                        <span data-feather="users" class="align-text-bottom"></span>
+                        Submissions
+                    </a>
+                </li>
 
                 @can('permission_access')
                     <li class="nav-item">
@@ -35,7 +43,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('role_access')
+                 @can('roles_access')
                     <li class="nav-item">
                         <a class="nav-link {{ (request()->is('admin/roles*')) ? 'active' : '' }}"
                            href="{{ route('admin.roles.index') }}">

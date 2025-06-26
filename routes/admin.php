@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RiverSubmissionAdminController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 
@@ -20,7 +21,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::put('update-password', [ProfileController::class, 'updatePassword'])->name('password.update');
 
     Route::resource('users', UserController::class);
-    Route::get('user-ban-unban/{id}/{status}', 'UserController@banUnban')->name('user.banUnban');
+    Route::get('user-approve/{id}/{status}', [UserController::class, 'approve'])->name('user.approve');
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
+
+    Route::get('/submissions', [RiverSubmissionAdminController::class, 'index'])->name('submissions.index');
+    Route::get('/submissions/{id}', [RiverSubmissionAdminController::class, 'show'])->name('submissions.show');
 });

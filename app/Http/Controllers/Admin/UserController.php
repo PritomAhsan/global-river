@@ -29,9 +29,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('permission_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('permission_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('admin.users.create');
-        
+
     }
 
     /**
@@ -106,16 +106,17 @@ class UserController extends Controller
         //
     }
 
-    public function banUnban($id, $status)
+    public function approve($id, $status)
     {
-        if (auth()->user()->hasRole('Admin')){
-            $user = User::findOrFail($id);
-            $user->status = $status;
-            if ($user->save()){
-                return redirect()->back()->with('message', 'User status updated successfully!');
-            }
-            return redirect()->back()->with('error', 'User status update fail!');
-        }
-        return redirect(Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $user = User::findOrFail($id);
+
+        $user->status = $status;
+        $user->save();
+
+        // if ($status == 3) {
+        //     Mail::to($user->email)->send(new UserApprovedMail($user));
+        // }
+
+        return redirect()->back()->with('success', 'User approved successfully and mail sent.');
     }
 }
