@@ -22,3 +22,5 @@ Auth::routes();
 
 Route::get('/submission-form', [App\Http\Controllers\HomeController::class, 'form'])->name('submission-form');
 Route::post('/submission-form', [App\Http\Controllers\HomeController::class, 'formAction'])->name('submission-form-action');
+
+Route::get('/map', [App\Http\Controllers\HomeController::class, 'mapPage'])->name('map');

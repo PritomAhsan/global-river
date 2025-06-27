@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home | Global River Conservation Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{asset('css/style.css')}}" />
+  <link rel="stylesheet" href="{{asset('css/style.css')}}" />A
 </head>
 <body>
 
@@ -17,9 +17,9 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav ms-auto">
-      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link" href="{{ url('/') }}">Home</a>
       <a class="nav-link" href="about.html">About</a>
-      <a class="nav-link" href="map.html">Explore Map</a>
+      <a class="nav-link" href="{{ url('/map') }}">Explore Map</a>
       <a class="nav-link" href="resources.html">Resources</a>
       <a class="nav-link" href="submit.html">Submit</a>
     </div>

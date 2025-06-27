@@ -54,4 +54,8 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success', 'River submission successfully saved! We will contact you later!');
     }
+
+    public function mapPage(){
+        return view('map');
+    }
 }
